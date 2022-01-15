@@ -171,11 +171,11 @@ so that I know how many customers will arrive at the restaurant on a given day.
    - display a `Submit` button that, when clicked, saves the new reservation, then displays the `/dashboard` page for the date of the new reservation
    - display a `Cancel` button that, when clicked, returns the user to the previous page
    - display any error messages returned from the API
-1. The `/dashboard` page will
+2. The `/dashboard` page will
    - list all reservations for one date only. (E.g. if the URL is `/dashboard?date=2035-12-30` then send a GET to `/reservations?date=2035-12-30` to list the reservations for that date). The date is defaulted to today, and the reservations are sorted by time.
    - display next, previous, and today buttons that allow the user to see reservations on other dates
    - display any error messages returned from the API
-1. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
+3. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
    - seed the reservations table with the data contained in `./back-end/src/db/seeds/00-reservations.json`
 
 > **Hint** Dates and times in JavaScript and databases can be challenging.
@@ -231,7 +231,7 @@ so that users do not accidentally create a reservation for days when we are clos
 1. The `/reservations/new` page will display an error message with `className="alert alert-danger"` if any of the following constraints are violated:
    - The reservation date is a Tuesday as the restaurant is closed on Tuesdays.
    - The reservation date is in the past. Only future reservations are allowed.
-1. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
+2. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
 
 > **Hint** There may be more than one validation error on the page at time.
 >
@@ -256,7 +256,7 @@ so that users do not accidentally create a reservation for a time we cannot acco
    - The reservation time is before 10:30 AM.
    - The reservation time is after 9:30 PM, because the restaurant closes at 10:30 PM and the customer needs to have time to enjoy their meal.
    - The reservation date and time combination is in the past. Only future reservations are allowed. E.g., if it is noon, only allow reservations starting _after_ noon today.
-1. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
+2. The `/reservations` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
 
 > **Hint** Parsing a Date that includes the time in JavaScript can be tricky. Again, keep an eye out for which time zone is being used for your Dates.
 
@@ -275,7 +275,7 @@ so that I know which tables are occupied and free.
      - Capacity: `<input name="capacity" />`, this is the number of people that can be seated at the table, which must be at least 1 person.
    - display a `Submit` button that, when clicked, saves the new table then displays the `/dashboard` page
    - display a `Cancel` button that, when clicked, returns the user to the previous page
-1. The `/dashboard` page will:
+2. The `/dashboard` page will:
 
    - display a list of all reservations in one area.
    - each reservation in the list will:
@@ -285,17 +285,17 @@ so that I know which tables are occupied and free.
      - Each table will display "Free" or "Occupied" depending on whether a reservation is seated at the table.
      - The "Free" or "Occupied" text must have a `data-table-id-status=${table.table_id}` attribute, so it can be found by the tests.
 
-1. The `/reservations/:reservation_id/seat` page will
+3. The `/reservations/:reservation_id/seat` page will
    - have the following required and not-nullable fields:
      - Table number: `<select name="table_id" />`. The text of each option must be `{table.table_name} - {table.capacity}` so the tests can find the options.
    - do not seat a reservation with more people than the capacity of the table
    - display a `Submit` button that, when clicked, assigns the table to the reservation then displays the `/dashboard` page
    - PUT to `/tables/:table_id/seat/` in order to save the table assignment. The body of the request must be `{ data: { reservation_id: x } }` where X is the reservation_id of the reservation being seated. The tests do not check the body returned by this request.
    - display a `Cancel` button that, when clicked, returns the user to the previous page
-1. The `tables` table must be seeded with the following data:
+4. The `tables` table must be seeded with the following data:
    - `Bar #1` & `Bar #2`, each with a capacity of 1.
    - `#1` & `#2`, each with a capacity of 6.
-1. The `/tables` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
+5. The `/tables` API will have the same validations as above and will return 400, along with an informative error message, when a validation error happens.
 
 - if the table capacity is less than the number of people in the reservation, return 400 with an error message.
 - if the table is occupied, return 400 with an error message.
@@ -392,7 +392,7 @@ so that reservations are accurate and current.
      - Clicking "Ok" on the confirmation dialog, sets the reservation status to `cancelled`, and the results on the page are refreshed.
        - set the status of the reservation to `cancelled` using a PUT to `/reservations/:reservation_id/status` with a body of `{data: { status: "cancelled" } }`.
      - Clicking "Cancel" on the confirmation dialog makes no changes.
-1. The `/reservations/:reservation_id/edit` page will display the reservation form with the existing reservation data filled in
+2. The `/reservations/:reservation_id/edit` page will display the reservation form with the existing reservation data filled in
    - Only reservations with a status of "booked" can be edited.
    - Clicking the "Submit" button will save the reservation, then displays the previous page.
    - Clicking "Cancel" makes no changes, then display the previous page.
