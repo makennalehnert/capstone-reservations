@@ -60,10 +60,18 @@ async function fetchJson(url, options, onCancel) {
 
 export async function listReservations(params, signal) {
   const url = new URL(`${API_BASE_URL}/reservations`);
+  if(params){
   Object.entries(params).forEach(([key, value]) =>
     url.searchParams.append(key, value.toString())
   );
-  return await fetchJson(url, { headers, signal }, [])
-    .then(formatReservationDate)
-    .then(formatReservationTime);
+  }
+  return await fetchJson(url, { headers, signal, method: "GET" }, []);
+}
+
+// Creates new reservation after submitting new reservation form
+
+export async function createReservation(reservation, signal){
+  const url = `${API_BASE_URL}/reservations`;
+  const body = JSON.stringify({ data: reservation });
+  return await fetchJson(url, {headers, signal, method: "POST", body}, []);
 }

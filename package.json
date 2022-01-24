@@ -5,7 +5,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/Thinkful-Ed/starter-restaurant-reservation"
+    "url": "git+https://github.com/Thinkful-Ed/starter-restaurant-reservation.git"
   },
   "scripts": {
     "build": "npm -prefix front-end run build",
@@ -47,5 +47,14 @@
   },
   "keywords": [],
   "author": "Thinkful, Inc.",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Thinkful-Ed/starter-restaurant-reservation/issues"
+  },
+  "homepage": "https://github.com/Thinkful-Ed/starter-restaurant-reservation#readme",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.2",
+    "knex": "^1.0.1"
+  }
 }
