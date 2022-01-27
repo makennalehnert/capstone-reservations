@@ -185,7 +185,7 @@ function validStatus(req, res, next){
 function statusValidator(req, res, next){
   const status = req.body.data.status;
   const currentStatus = res.locals.reservation.status;
-  const validStatuses = ["booked", "seated", "finished", "canceled"];
+  const validStatuses = ["booked", "seated", "finished", "cancelled"];
 
   if(!validStatuses.includes(status)){
     return next({
@@ -234,10 +234,19 @@ async function update(req, res) {
   res.status(200).json({ data: statusUpdate});
 }
 
+async function updateReservation(req, res) {
+  const reservation_id = req.params.reservationId;
+  const reservationUpdated = req.body.data;
+
+  const updatedReservation = await reservationsService.updateReservation(reservation_id, reservationUpdated);
+  res.status(200).json({ data: updatedReservation});
+}
+
 
 module.exports = {
   read: [asyncErrorBoundary(reservationExists), read],
   list: asyncErrorBoundary(list),
   create: [hasOnlyValidProperties, hasRequiredProperties, peopleIsNumber, validDate, validTime, pastReservation, isTuesday, timeAvailable, validStatus, asyncErrorBoundary(create)],
-  update: [asyncErrorBoundary(reservationExists), statusValidator, asyncErrorBoundary(update)]
+  update: [asyncErrorBoundary(reservationExists), statusValidator, asyncErrorBoundary(update)],
+  updateReservation: [asyncErrorBoundary(reservationExists), hasRequiredProperties, validDate, validTime, peopleIsNumber, asyncErrorBoundary(updateReservation)],
 };

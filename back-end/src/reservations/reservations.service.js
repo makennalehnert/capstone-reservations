@@ -43,8 +43,12 @@ function mobileSearch(mobile_phone){
     .orderBy("reservation_date")
 }
 
-function updateReservation(reservation_id){
-    
+function updateReservation(reservation_id, reservation){
+    return knex("reservations")
+    .where({reservation_id})
+    .update(reservation)
+    .returning("*")
+    .then((res) => res[0])
 }
 
 module.exports = {
@@ -53,4 +57,5 @@ module.exports = {
     read,
     update,
     mobileSearch,
+    updateReservation,
 };
