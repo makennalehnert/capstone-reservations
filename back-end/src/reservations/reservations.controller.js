@@ -31,6 +31,7 @@ const VALID_PROPERTIES = [
     "reservation_date",
     "reservation_time",
     "people",
+    "status"
 ];
 
 //Checks if request has only valid properties
@@ -49,7 +50,12 @@ function hasOnlyValidProperties(req, res, next) {
 }
 
 //Checks if request has all required properties
-const hasRequiredProperties = hasProperties(...VALID_PROPERTIES);
+const hasRequiredProperties = hasProperties("first_name",
+"last_name",
+"mobile_number",
+"reservation_date",
+"reservation_time",
+"people");
 
 //Checks if people is a number
 function peopleIsNumber(req, res, next){
@@ -160,6 +166,7 @@ function isTuesday(req, res, next){
 
 function validStatus(req, res, next){
   const {status} = req.body.data;
+  console.log
   if(status === 'seated'){
     return next({
       status:400,
@@ -204,11 +211,14 @@ function read(req, res, next){
   res.json({data});
 }
 
-
 async function list(req, res) {
   const date = req.query.date;
-  const reservations = await reservationsService.list(date)
-  res.json({data: reservations})
+  const mobile_number = req.query.mobile_number;
+  if(date){
+    return res.json({ data: await reservationsService.list(date)})
+  } else {
+    return res.json({ data: await reservationsService.mobileSearch(mobile_number)})
+  }
 }
 
 async function create(req, res) {
@@ -223,6 +233,7 @@ async function update(req, res) {
   const statusUpdate = await reservationsService.update(reservation_id, status);
   res.status(200).json({ data: statusUpdate});
 }
+
 
 module.exports = {
   read: [asyncErrorBoundary(reservationExists), read],

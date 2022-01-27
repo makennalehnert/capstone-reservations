@@ -34,9 +34,23 @@ function update(reservation_id, status){
     .then((res) => res[0])
 }
 
+function mobileSearch(mobile_phone){
+    return knex("reservations")
+    .whereRaw(
+        "translate(mobile_number, '() -', '') like ?",
+        `%${mobile_phone.replace(/\D/g, "")}%`
+      )
+    .orderBy("reservation_date")
+}
+
+function updateReservation(reservation_id){
+    
+}
+
 module.exports = {
     list,
     create,
     read,
     update,
+    mobileSearch,
 };
