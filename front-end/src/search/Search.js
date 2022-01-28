@@ -43,7 +43,7 @@ export default function Search({ }) {
       <h2>Search for Reservation</h2>
       <ErrorAlert error={error} />
       <div>
-        <label>Last Name:</label>
+        <label>Phone Number:</label>
         <input name="mobile_number" 
                type="tel" 
                id="mobile_number"
