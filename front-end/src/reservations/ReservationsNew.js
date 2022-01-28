@@ -41,7 +41,7 @@ export default function ReservationsNew({ loadDashboard, edit }) {
       const date = new Date(foundReservation.reservation_date);
       // added the Number and the plus 1 to getDate
       const dateString = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)
-      ).slice(-2)}-${("0" + Number(date.getDate()) + 1).slice(-2)}`;
+      ).slice(-2)}-${("0" + Number(date.getDate() + 1)).slice(-2)}`;
 
       setReservationForm({
         first_name: foundReservation.first_name,
